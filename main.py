@@ -19,14 +19,14 @@ async def on_ready():
         + str(bot.user.id)
     )
 
-@bot.command()
+@bot.command(pass_context=True)
 async def help(ctx):
     await ctx.send(
         "\nExample: Getting the price of a Bitcoin in USD:\n" +
         "`  !price USD BTC`"
     )
 
-@bot.command()
+@bot.command(pass_context=True)
 async def price(ctx, to_sym, from_sym):
     if to_sym in coin_list and from_sym in coin_list:
         res = requests.get("https://min-api.cryptocompare.com/data/pricemulti?fsyms="+from_sym+"&tsyms="+to_sym)
