@@ -1,5 +1,6 @@
 # CryptoBot
 A Discord bot for comparing cryptocurrency values.
+Data from [CryptoCompare](https://www.cryptocompare.com/)
 
 
 ## Dependencies
