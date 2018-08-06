@@ -9,4 +9,4 @@ Data from [CryptoCompare](https://www.cryptocompare.com/)
 - Discord.py (obviously)
     - `python3 -m pip install -U https://github.com/Rapptz/discord.py/archive/rewrite.zip`
 - Requests
-    - [Get it here](https://github.com/requests/requests)
+    - `python3 -m pip install requests`
