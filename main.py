@@ -2,9 +2,9 @@ import discord, asyncio, platform
 from discord.ext.commands import Bot
 from discord.ext import commands
 
-TOKEN = "NDY0MTYyMDk3ODI4MzMxNTIx.DkiwIw.PWSRmOKmL07_8LmR1EjzvGlfguw"
-
-#client = discord.Client()
+# Place your token in a file called "token.txt"
+token_file = open("token.txt", "r")
+TOKEN = token_file.read()
 
 bot = Bot(command_prefix='!', case_insensitive=True, pm_help=True, description='A bot for comparing cryptocurrenct values.')
 
