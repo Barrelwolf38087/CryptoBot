@@ -1,4 +1,12 @@
-import discord, requests, asyncio, platform
+import discord
+
+# Make sure we're using the correct version of Discord.py
+if discord.__author__ != "Rapptz":
+    print("Error: Please use the rewrite version of Discord.py.")
+    print("Check the README for instructions.")
+    exit()
+
+import requests, asyncio, platform
 from discord.ext.commands import Bot
 
 coin_list = list(requests.get("https://www.cryptocompare.com/api/data/coinlist/").json()['Data'].keys())
