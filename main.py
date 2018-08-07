@@ -5,8 +5,7 @@ coin_list = list(requests.get("https://www.cryptocompare.com/api/data/coinlist/"
 coin_list.append('USD')
 
 # Place your token in a file called "token.txt"
-token_file = open("token.txt", "r")
-TOKEN = token_file.read()
+TOKEN = open("token.txt", "r").read()
 
 bot = Bot(command_prefix='!', case_insensitive=True, pm_help=True, description='A bot for comparing cryptocurrency values.')
 bot.remove_command("help")
