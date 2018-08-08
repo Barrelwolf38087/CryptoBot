@@ -61,7 +61,8 @@ async def help(ctx, cmd=None):
     # Make sure the command typed actually exists
     if cmd in help_strings.keys():
         await ctx.send(help_strings[cmd])
-    else:
+    
+    if cmd not in help_strings.keys() and cmd is not None:
         await ctx.send(cmd + ": Command not found.")
 
 # TODO: Clean this up at some point, it's a mess.
