@@ -16,7 +16,7 @@ bot = Bot(command_prefix='!', case_insensitive=True, pm_help=True, description='
 coin_data = requests.get("https://www.cryptocompare.com/api/data/coinlist/").json()['Data']
 
 # User typing is checked against this list of valid tickers
-coin_list = coin_data.keys()
+coin_list = list(coin_data.keys())
 
 # USD is accepted by the API, but is not in the coin list;
 # we can add it without any problems
