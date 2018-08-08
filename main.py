@@ -11,7 +11,7 @@ from discord.ext.commands import Bot
 # End imports
 
 
-bot = Bot(command_prefix='!', case_insensitive=True, pm_help=True, description='A bot for comparing cryptocurrency values.')
+bot = Bot(command_prefix='!', case_insensitive=True, description='A bot for comparing cryptocurrency values.')
 
 coin_data = requests.get("https://www.cryptocompare.com/api/data/coinlist/").json()['Data']
 
@@ -62,21 +62,22 @@ async def help(ctx, cmd=None):
     if cmd in help_strings.keys():
         await ctx.send(help_strings[cmd])
     else:
+        # Get rid of annoying errors when no command is passed
         if cmd is not None:
             await ctx.send(cmd + ": Command not found")
 
 # TODO: Clean this up at some point, it's a mess.
 @bot.command()
-async def price(ctx, to_sym, from_sym):
-    if to_sym in coin_list and from_sym in coin_list:
-        res = requests.get("https://min-api.cryptocompare.com/data/pricemulti?fsyms="+from_sym+"&tsyms="+to_sym)
-        await ctx.send("Price of 1 " + from_sym + ": " + str(res.json()[from_sym][to_sym]) + " " + to_sym)
+async def price(ctx, to_tkr, from_tkr):
+    if to_tkr in coin_list and from_tkr in coin_list:
+        res = requests.get("https://min-api.cryptocompare.com/data/pricemulti?fsyms="+from_tkr+"&tsyms="+to_tkr)
+        await ctx.send("Price of 1 " + from_tkr + ": " + str(res.json()[from_tkr][to_tkr]) + " " + to_tkr)
         await ctx.send("Data from <https://www.cryptocompare.com>")
     else:
-        if to_sym not in coin_list:
-            await ctx.send("Error: " + to_sym + " is not a valid ticker. Please check your typing.")
-        if from_sym not in coin_list:
-            await ctx.send("Error: " + from_sym + " is not a valid ticker. Please check your typing.")
+        if to_tkr not in coin_list:
+            await ctx.send("Error: " + to_tkr + " is not a valid ticker. Please check your typing.")
+        if from_tkr not in coin_list:
+            await ctx.send("Error: " + from_tkr + " is not a valid ticker. Please check your typing.")
         await ctx.send("Please note that USD is the only non-cryptocurrency accepted.")
 
 @bot.command()
