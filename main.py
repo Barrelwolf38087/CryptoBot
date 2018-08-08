@@ -15,7 +15,7 @@ bot = Bot(command_prefix='!', case_insensitive=True, description='A bot for comp
 
 coin_data = requests.get("https://www.cryptocompare.com/api/data/coinlist/").json()['Data']
 
-# User typing is checked against this list of valid tickers
+# User typing is checked against this list of valid symbols
 coin_list = list(coin_data.keys())
 
 # USD is accepted by the API, but is not in the coin list;
@@ -34,7 +34,8 @@ bot.remove_command("help")
 # Help strings; sent when a user types "!help {command_here}"
 help_strings = {
     "price": "\nExample: Getting the price of a Bitcoin in USD:\n`  !price USD BTC`",
-    "image": "\nExample: Getting the Bitcoin logo:\n`   !image BTC`"
+    "image": "\nExample: Getting the Bitcoin logo:\n`   !image BTC`",
+    "name":  "\nExample: Finding out what \"ETC\" means:\n`    !name ETC`"
 }
 
 # Commands / events below
@@ -68,16 +69,16 @@ async def help(ctx, cmd=None):
 
 # TODO: Clean this up at some point, it's a mess.
 @bot.command()
-async def price(ctx, to_tkr, from_tkr):
-    if to_tkr in coin_list and from_tkr in coin_list:
-        res = requests.get("https://min-api.cryptocompare.com/data/pricemulti?fsyms="+from_tkr+"&tsyms="+to_tkr)
-        await ctx.send("Price of 1 " + from_tkr + ": " + str(res.json()[from_tkr][to_tkr]) + " " + to_tkr)
+async def price(ctx, to_sym, from_sym):
+    if to_sym in coin_list and from_sym in coin_list:
+        res = requests.get("https://min-api.cryptocompare.com/data/pricemulti?fsyms="+from_sym+"&tsyms="+to_sym)
+        await ctx.send("Price of 1 " + from_sym + ": " + str(res.json()[from_sym][to_sym]) + " " + to_sym)
         await ctx.send("Data from <https://www.cryptocompare.com>")
     else:
-        if to_tkr not in coin_list:
-            await ctx.send("Error: " + to_tkr + " is not a valid ticker. Please check your typing.")
-        if from_tkr not in coin_list:
-            await ctx.send("Error: " + from_tkr + " is not a valid ticker. Please check your typing.")
+        if to_sym not in coin_list:
+            await ctx.send("Error: " + to_sym + " is not a valid symbol. Please check your typing.")
+        if from_sym not in coin_list:
+            await ctx.send("Error: " + from_sym + " is not a valid symbol. Please check your typing.")
         await ctx.send("Please note that USD is the only non-cryptocurrency accepted.")
 
 @bot.command()
@@ -87,7 +88,15 @@ async def image(ctx, coin):
     if coin in coin_list and coin is not "USD":
         await ctx.send("https://www.cryptocompare.com" + coin_data[coin]["ImageUrl"])
     else:
-        await ctx.send("Error: " + coin + " is not a valid ticker. Please check your typing.")
+        await ctx.send("Error: " + coin + " is not a valid symbol. Please check your typing.")
+
+@bot.command()
+async def name(ctx, coin):
+    if coin in coin_list and coin is not "USD":
+        await ctx.send(coin_data[coin]["FullName"])
+    else:
+        await ctx.send("Error: " + coin + " is not a valid symbol. Please check your typing.")
+
 
 # End commands / events
 
