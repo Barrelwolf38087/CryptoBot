@@ -34,7 +34,7 @@ bot.remove_command("help")
 # Help strings; sent when a user types "!help {command_here}"
 help_strings = {
     "price": "\nExample: Getting the price of a Bitcoin in USD:\n`  !price USD BTC`",
-    "image": "\nExample: Getting the Bitcoin logo: `!image BTC`"
+    "image": "\nExample: Getting the Bitcoin logo:\n`   !image BTC`"
 }
 
 # Commands / events below
