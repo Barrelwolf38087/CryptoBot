@@ -16,7 +16,7 @@ Data from [CryptoCompare](https://www.cryptocompare.com/)
 1. Create a bot [here](https://discordapp.com/developers/applications/me).
 2. Paste your bot's token into a file called "token.txt".
     * Ensure there is no newline at the end of the file.
-    * On *NIX, try `tr -d '\n' < token.txt`
+    * On *NIX, try `tr -d '\n' < token.txt`.
     * If there is a newline at the end, the bot will fail to log in and you will get a cryptic error.
 3. Run the bot.
 4. Invite the bot to your server using your generated OAuth2 URL.
