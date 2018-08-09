@@ -17,10 +17,7 @@ coin_data = requests.get("https://www.cryptocompare.com/api/data/coinlist/").jso
 
 # User typing is checked against this list of valid symbols
 coin_list = list(coin_data.keys())
-
-# USD is accepted by the API, but is not in the coin list;
-# we can add it without any problems
-coin_list.append('USD')
+invalid_coin = "Error: {} is not a valid symbol. Please check your typing."
 
 # Place the token in a file called "token.txt"
 # IMPORTANT: Make sure there is no newline at the end!
@@ -70,7 +67,7 @@ async def help(ctx, cmd=None):
 # TODO: Clean this up at some point, it's a mess.
 @bot.command()
 async def price(ctx, to_sym, from_sym):
-    if to_sym in coin_list and from_sym in coin_list:
+    if to_sym in coin_list or to_sym is "USD" and from_sym in coin_list or from_sym is "USD":
         res = requests.get("https://min-api.cryptocompare.com/data/pricemulti?fsyms="+from_sym+"&tsyms="+to_sym)
         await ctx.send("Price of 1 " + from_sym + ": " + str(res.json()[from_sym][to_sym]) + " " + to_sym)
         await ctx.send("Data from <https://www.cryptocompare.com>")
@@ -83,20 +80,24 @@ async def price(ctx, to_sym, from_sym):
 
 @bot.command()
 async def image(ctx, coin):
-
-    # Make sure an actual coin was passed (not USD)
-    if coin in coin_list and coin is not "USD":
+    if coin in coin_list:
         await ctx.send("https://www.cryptocompare.com" + coin_data[coin]["ImageUrl"])
     else:
-        await ctx.send("Error: " + coin + " is not a valid symbol. Please check your typing.")
+        await ctx.send(invalid_coin.format(coin))
 
 @bot.command()
 async def name(ctx, coin):
-    if coin in coin_list and coin is not "USD":
+    if coin in coin_list:
         await ctx.send(coin_data[coin]["FullName"])
     else:
-        await ctx.send("Error: " + coin + " is not a valid symbol. Please check your typing.")
+        await ctx.send(invalid_coin.format(coin))
 
+@bot.command()
+async def algo(ctx, coin):
+    if coin in coin_list:
+        await ctx.send(coin_data[coin]["Algorithm"])
+    else:
+        await ctx.send(invalid_coin.format(coin))
 
 # End commands / events
 
