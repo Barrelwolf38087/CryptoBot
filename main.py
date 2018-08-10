@@ -17,6 +17,7 @@ coin_data = requests.get("https://www.cryptocompare.com/api/data/coinlist/").jso
 
 # User typing is checked against this list of valid symbols
 coin_list = list(coin_data.keys())
+coin_list.append("USD")
 invalid_coin = "Error: {} is not a valid symbol. Please check your typing."
 
 # Place the token in a file called "token.txt"
@@ -68,7 +69,7 @@ async def help(ctx, cmd=None):
 # TODO: Clean this up at some point, it's a mess.
 @bot.command()
 async def price(ctx, to_sym, from_sym):
-    if to_sym in coin_list or to_sym is "USD" and from_sym in coin_list or from_sym is "USD":
+    if to_sym in coin_list and from_sym in coin_list:
         res = requests.get("https://min-api.cryptocompare.com/data/pricemulti?fsyms="+from_sym+"&tsyms="+to_sym)
         await ctx.send("Price of 1 " + from_sym + ": " + str(res.json()[from_sym][to_sym]) + " " + to_sym)
         await ctx.send("Data from <https://www.cryptocompare.com>")
@@ -88,14 +89,14 @@ async def image(ctx, coin):
 
 @bot.command()
 async def name(ctx, coin):
-    if coin in coin_list:
+    if coin in coin_list and coin is not "USD":
         await ctx.send(coin_data[coin]["FullName"])
     else:
         await ctx.send(invalid_coin.format(coin))
 
 @bot.command()
 async def algo(ctx, coin):
-    if coin in coin_list:
+    if coin in coin_list and coin is not "USD":
         await ctx.send(coin_data[coin]["Algorithm"])
     else:
         await ctx.send(invalid_coin.format(coin))
