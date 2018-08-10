@@ -32,7 +32,8 @@ bot.remove_command("help")
 help_strings = {
     "price": "\nExample: Getting the price of a Bitcoin in USD:\n`  !price USD BTC`",
     "image": "\nExample: Getting the Bitcoin logo:\n`   !image BTC`",
-    "name":  "\nExample: Finding out what \"ETC\" means:\n`    !name ETC`"
+    "name":  "\nExample: Finding out what \"ETC\" means:\n`    !name ETC`",
+    "algo":  "\nExample: "
 }
 
 # Commands / events below
@@ -98,6 +99,10 @@ async def algo(ctx, coin):
         await ctx.send(coin_data[coin]["Algorithm"])
     else:
         await ctx.send(invalid_coin.format(coin))
+
+@bot.command()
+async def dedede(ctx):
+    await ctx.send("https://cdn.discordapp.com/attachments/477252163899228160/477273917795467284/image.jpg")
 
 # End commands / events
 
